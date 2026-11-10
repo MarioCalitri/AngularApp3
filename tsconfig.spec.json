@@ -10,5 +10,5 @@
   "include": [
     "src/**/*.d.ts",
     "src/**/*.spec.ts"
-  ]
+, "src/app/components/book-list/book-list.conponent.spec.ts"  ]
 }

@@ -1,0 +1,8 @@
+<h2>Book List</h2>
+<div *ngIf="books.length === 0">No books found.</div>
+<ul *ngIf="books.length > 0">
+  <li *ngFor="let book of books">
+    <strong>{{ book.title }}</strong> by {{ book.author }}
+    <p>{{ book.description }}</p>
+  </li>
+</ul>
