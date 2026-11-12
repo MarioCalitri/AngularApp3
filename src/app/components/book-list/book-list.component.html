@@ -1,8 +1,33 @@
-<h2>Book List</h2>
-<div *ngIf="books.length === 0">No books found.</div>
-<ul *ngIf="books.length > 0">
-  <li *ngFor="let book of books">
-    <strong>{{ book.title }}</strong> by {{ book.author }}
-    <p>{{ book.description }}</p>
-  </li>
-</ul>
+<div class="container">
+  <h2>Speed Readers Book Club: Garage Edition</h2>
+  
+  <div class="addForm">
+    <h3>Log a New Book to the Trailer</h3>
+    <input #titleInput placeholder="Book Title" />
+    <input #authorInput placeholder="Author / Crew Chief" />
+    <input #excuseInput placeholder="Description (e.g., 'Too many yellow flags')" />
+    
+    <button (click)="addBook(titleInput.value, authorInput.value, excuseInput.value); titleInput.value=''; authorInput.value=''; excuseInput.value=''">
+      Load Into Hauler
+    </button>
+  </div>
+
+  <div *ngIf="books.length > 0; else noBooks">
+    <h4>Current Book Inventory (Starting Grid)</h4>
+    <ul>
+      <li *ngFor="let book of books; trackBy: trackById">
+        <div class="bookInfo">
+          <strong>{{ book.title }}</strong> 
+          <span class="authorText"> by {{ book.author }}</span>
+        </div>
+        <div class="excuseTag" *ngIf="book.description">
+          <em>Pit Note: <br><br> "{{ book.description }}"</em>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <ng-template #noBooks>
+    <p>Garage is empty. Time to hit the bookstore setup!</p>
+  </ng-template>
+</div>
