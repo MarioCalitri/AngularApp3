@@ -1,1 +1,25 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: 'SpeedDemon';
+  src: url('/fonts/SpeedDemon.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Square';
+  src: url('/fonts/Square.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Force Square across all body text, paragraphs, spans, and form inputs */
+body, p, span, label, input, button {
+  font-family: 'Square', sans-serif !important;
+}
+
+/* Keep your headers screaming in SpeedDemon */
+h1, h2 {
+  font-family: 'SpeedDemon', sans-serif !important;
+}
