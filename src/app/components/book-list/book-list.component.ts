@@ -22,19 +22,19 @@ export class BookListComponent implements OnInit {
   }
 
   fetchBooks(): void {
-    this.bookService.getBooks().subscribe({
-      next: (data) => {
+    this.bookService.getAll().subscribe({
+      next: (data: Book[]) => {
         this.books = data;
         this.cdr.detectChanges();
       },
-      error: (err) => console.error('Failed to load books:', err)
+      error: (err: any) => console.error('Failed to load books:', err)
     });
   }
-
+  
   // Updated to accept 3 parameters including excuse
   addBook(title: string, author: string, description: string): void {
     if (!title || !author) return;
-    this.bookService.addBook({ title, author, description } as Book).subscribe({
+    this.bookService.add({ title, author, description } as Book).subscribe({
       next: () => this.fetchBooks(),
       error: (err) => console.error('Error adding book:', err)
     });

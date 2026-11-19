@@ -1,27 +1,48 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-// Interface representing the Book data structure
 export interface Book {
   id?: number;
   title: string;
   author: string;
-  description?: string;
+  description: string;
+  imageName?: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookService {
-private apiUrl = 'http://localhost/AngularApp3API/api.php';
+  // Update this folder name if your XAMPP htdocs folder uses a different name
+  private baseUrl = 'http://localhost/AngularApp3API';
+
   constructor(private http: HttpClient) {}
 
-  getBooks(): Observable<Book[]> {
-    return this.http.get<Book[]>(this.apiUrl);
+  // Retrieve all books from list.php
+  getAll(): Observable<Book[]> {
+    return this.http.get(`${this.baseUrl}/list.php`).pipe(
+      map((res: any) => res['data'] ? res['data'] : res)
+    );
   }
 
-  addBook(book: Book): Observable<Book> {
-    return this.http.post<Book>(this.apiUrl, book);
+  // Retrieve a single book by ID from view.php
+  get(id: number): Observable<Book> {
+    const params = new HttpParams().set('id', id.toString());
+    return this.http.get<Book>(`${this.baseUrl}/view.php`, { params });
+  }
+
+  // Add a new book via add.php
+  add(book: Book): Observable<Book> {
+    return this.http.post(`${this.baseUrl}/add.php`, { data: book }).pipe(
+      map((res: any) => res['data'] ? res['data'] : res)
+    );
+  }
+
+  // Delete a book by ID via delete.php
+  delete(id: number): Observable<any> {
+    const params = new HttpParams().set('id', id.toString());
+    return this.http.delete(`${this.baseUrl}/delete.php`, { params });
   }
 }

@@ -1,0 +1,38 @@
+<div class="container">
+  <h2 class="main-title">
+  Speed Readers Book Club:<br>
+  <span class="sub-title">Garage Edition</span>
+</h2>
+    <button class="btn btn-primary" routerLink="/add">Add Book</button>
+  </div>
+
+  @if (books.length > 0) {
+    <div class="book-list">
+      @for (book of books; track book.id) {
+        <div class="book-card">
+          <div class="book-media">
+            @if (book.imageName) {
+              <img [src]="'http://localhost/AngularApp3API/uploads/' + book.imageName" alt="Book Cover" class="book-cover" />
+            } @else {
+              <div class="book-cover placeholder-cover">
+                <span>No Cover</span>
+              </div>
+            }
+          </div>
+          
+          <div class="book-content">
+            <h3 class="book-title">{{ book.title }}</h3>
+            <p class="book-author">by {{ book.author }}</p>
+            <p class="book-description">{{ book.description }}</p>
+            
+            <div class="actions">
+               <button class="btn btn-secondary" [routerLink]="['/update', book.id]">Update</button>
+                <button class="btn btn-danger" (click)="deleteBook(book.id)">Delete</button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  } @else {
+    <p class="no-books">No books found in the inventory.</p>
+  }

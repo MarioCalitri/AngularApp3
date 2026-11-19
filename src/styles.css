@@ -22,4 +22,5 @@ body, p, span, label, input, button {
 /* Keep your headers screaming in SpeedDemon */
 h1, h2 {
   font-family: 'SpeedDemon', sans-serif !important;
+  font-size: 100px;
 }
