@@ -3,6 +3,10 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { BookService, Book } from '../services/book.service';
 
+/**
+ * Displays the book catalog, links to add/update views,
+ * and handles deleting books via BookService.
+ */
 @Component({
   selector: 'app-books',
   imports: [CommonModule, RouterLink],
@@ -15,6 +19,7 @@ export class BooksComponent implements OnInit {
   title = 'BookManager2026AM';
   public books: Book[] = [];
 
+  // Default book model used for component state
   book: Book = {
     id: 0,
     title: '',
@@ -30,6 +35,7 @@ export class BooksComponent implements OnInit {
     private cdr: ChangeDetectorRef
   ) {}
 
+  // Load books automatically when the component initializes
   ngOnInit(): void {
     this.getBooks();
   }
@@ -49,7 +55,7 @@ export class BooksComponent implements OnInit {
     });
   }
 
-  // Delete a book by ID and remove it from the displayed list
+  // Confirm with user, delete book by ID, and update the local list
   deleteBook(id: any): void {
     const confirmed = window.confirm('Are you sure you want to delete this book?');
 
@@ -59,6 +65,7 @@ export class BooksComponent implements OnInit {
 
     this.bookService.delete(id).subscribe({
       next: () => {
+        // Remove the deleted book without needing a full reload
         this.books = this.books.filter(book => book.id && +book.id !== +id);
         this.success = 'Deleted successfully';
         this.cdr.detectChanges();

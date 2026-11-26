@@ -1,12 +1,16 @@
 import { TestBed } from '@angular/core/testing';
-import { Book } from './book';
+import { provideHttpClient } from '@angular/common/http';
+import { BookService } from './book.service';
 
-describe('Book', () => {
-  let service: Book;
+// Unit test suite verifying BookService can be instantiated
+describe('BookService', () => {
+  let service: BookService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(Book);
+    TestBed.configureTestingModule({
+      providers: [BookService, provideHttpClient()]
+    });
+    service = TestBed.inject(BookService);
   });
 
   it('should be created', () => {

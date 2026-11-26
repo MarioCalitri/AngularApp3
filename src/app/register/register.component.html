@@ -1,0 +1,48 @@
+<div class="auth-card">
+  <h2>Register</h2>
+
+  <form (ngSubmit)="onRegister()">
+    <div class="form-group">
+      <label for="reg-username">Username</label>
+      <input
+        id="reg-username"
+        name="userName"
+        type="text"
+        [(ngModel)]="userName"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="reg-email">Email Address</label>
+      <input
+        id="reg-email"
+        name="email"
+        type="email"
+        [(ngModel)]="email"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="reg-password">Password</label>
+      <input
+        id="reg-password"
+        name="password"
+        type="password"
+        [(ngModel)]="password"
+        required
+      />
+    </div>
+
+    <button type="submit" class="btn-primary" [disabled]="submitting">
+      {{ submitting ? 'Registering...' : 'Register' }}
+    </button>
+  </form>
+
+  @if (error) {
+    <p class="error-msg">{{ error }}</p>
+  }
+
+  <p class="auth-switch">Already have an account? <a routerLink="/login">Log in</a></p>
+</div>

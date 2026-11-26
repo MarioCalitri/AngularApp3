@@ -39,11 +39,11 @@ export class UpdatebooksComponent implements OnInit {
         next: (data: any) => {
           this.book = data;
           if (this.book.imageName) {
-            this.previewUrl = `${this.baseUrl}/uploads/${this.book.imageName}`;
+            this.previewUrl = `${this.baseUrl}/uploads/${this.book.imageName}?v=${Date.now()}`;
           }
           this.cdr.detectChanges();
         },
-        error: (err: any) => {
+        error: () => {
           this.error = 'Failed to load book details.';
           this.cdr.detectChanges();
         }
@@ -57,7 +57,6 @@ export class UpdatebooksComponent implements OnInit {
       this.selectedFile = file;
       this.book.imageName = file.name;
 
-      // Generate local preview URL
       const reader = new FileReader();
       reader.onload = () => {
         this.previewUrl = reader.result as string;
@@ -74,11 +73,18 @@ export class UpdatebooksComponent implements OnInit {
       const uploadData = new FormData();
       uploadData.append('image', this.selectedFile, this.selectedFile.name);
 
-      this.http.post(`${this.baseUrl}/upload.php`, uploadData).subscribe({
-        next: () => {
+      this.http.post<any>(`${this.baseUrl}/upload.php`, uploadData).subscribe({
+        next: (res) => {
+          if (res?.filename) {
+            this.book.imageName = res.filename;
+          } else if (res?.fileName) {
+            this.book.imageName = res.fileName;
+          } else if (res?.imageName) {
+            this.book.imageName = res.imageName;
+          }
           this.sendUpdateRecord();
         },
-        error: (err: any) => {
+        error: () => {
           this.error = 'Image upload failed.';
           this.cdr.detectChanges();
         }
@@ -101,7 +107,7 @@ export class UpdatebooksComponent implements OnInit {
         this.success = 'Book updated successfully.';
         this.router.navigate(['/list']);
       },
-      error: (err: any) => {
+      error: () => {
         this.error = 'Failed to update book record.';
         this.cdr.detectChanges();
       }

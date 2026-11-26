@@ -40,6 +40,13 @@ export class BookService {
     );
   }
 
+  // Update an existing book via update.php
+  update(book: Book): Observable<Book> {
+    return this.http.post<any>(`${this.baseUrl}/update.php`, { data: book }).pipe(
+      map((res: any) => res['data'] ? res['data'] : res)
+    );
+  }
+
   // Delete a book by ID via delete.php
   delete(id: number): Observable<any> {
     const params = new HttpParams().set('id', id.toString());

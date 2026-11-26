@@ -14,13 +14,67 @@
   font-display: swap;
 }
 
-/* Force Square across all body text, paragraphs, spans, and form inputs */
-body, p, span, label, input, button {
-  font-family: 'Square', sans-serif !important;
+body {
+  margin: 0;
+  background-color: #141414;
+  color: #ffffff;
+  font-family: 'Square', sans-serif;
 }
 
-/* Keep your headers screaming in SpeedDemon */
+body, p, span, label, input, textarea, button {
+  font-family: 'Square', sans-serif;
+}
+
 h1, h2 {
-  font-family: 'SpeedDemon', sans-serif !important;
-  font-size: 100px;
+  font-family: 'SpeedDemon', sans-serif;
+  letter-spacing: 1px;
+}
+
+h1 {
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+input,
+textarea {
+  background-color: #1c1c1c;
+  color: #ffffff;
+  caret-color: #ffffff;
+  border: 1px solid #3a3a3a;
+}
+
+input[type="password"],
+input[type="password"]:-webkit-autofill,
+input[type="password"]:-webkit-autofill:hover,
+input[type="password"]:-webkit-autofill:focus {
+  background-color: #1c1c1c !important;
+  -webkit-box-shadow: 0 0 0 1000px #1c1c1c inset !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+}
+
+input[type="password"],
+input[type="password"]:focus,
+input[type="password"]:-webkit-autofill,
+input[type="password"]:-webkit-autofill:hover,
+input[type="password"]:-webkit-autofill:focus {
+  background-color: #1c1c1c !important;
+  -webkit-box-shadow: 0 0 0 1000px #1c1c1c inset !important;
+  box-shadow: 0 0 0 1000px #1c1c1c inset !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+  -webkit-text-security: disc !important;
+  font-family: system-ui, -apple-system, Arial, sans-serif !important;
+  opacity: 1 !important;
+}
+
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  filter: invert(1) brightness(2);
+  cursor: pointer;
 }
