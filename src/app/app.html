@@ -1,11 +1,17 @@
 <nav class="navbar">
   <div class="nav-links">
-    <a routerLink="/login">Login</a>
-    <a routerLink="/register">Register</a>
+    @if (!auth.currentUser()) {
+<a routerLink="/register">REGISTER</a>
+      <a routerLink="/login">LOGIN</a>     
+      
+    }
   </div>
 
-@if (auth.isLoggedIn()) {
-    <button type="button" class="logout-btn" (click)="onLogout()">Logout</button>
+  @if (auth.currentUser()) {
+    <div class="user-status">
+      <span>Logged in as: <strong>{{ auth.currentUser() }}</strong></span>
+      <button type="button" class="btn-logout" (click)="onLogout()">Logout</button>
+    </div>
   }
 </nav>
 

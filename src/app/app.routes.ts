@@ -7,7 +7,7 @@ import { RegisterComponent } from './register/register.component';
 import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/register', pathMatch: 'full' },
   { path: 'list', component: BooksComponent, canActivate: [authGuard] },
   { path: 'add', component: AddbooksComponent, canActivate: [authGuard] },
   { path: 'update/:id', component: UpdatebooksComponent, canActivate: [authGuard] },
@@ -15,5 +15,5 @@ export const routes: Routes = [
   { path: 'delete/:id', component: UpdatebooksComponent, canActivate: [authGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: '**', redirectTo: '/login' }
+  { path: '**', redirectTo: '/register' }
 ];

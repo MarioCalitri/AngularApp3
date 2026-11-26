@@ -24,14 +24,21 @@
       />
     </div>
 
-    <button type="submit" class="btn-primary" [disabled]="submitting">
-      {{ submitting ? 'Logging in...' : 'Login' }}
-    </button>
-  </form>
+    <button type="submit" class="btn-primary" [disabled]="submitting || isLockedOut">
+        {{ isLockedOut ? 'Locked Out' : (submitting ? 'Logging in...' : 'Login') }}
+    </button>  </form>
 
-  @if (error) {
-    <p class="error-msg">{{ error }}</p>
-  }
-
-  <p class="auth-switch">Need an account? <a routerLink="/register">Register</a></p>
-</div>
+   @if (error) {
+    <p class="error-msg">
+        {{ error }}
+        @if (isLockedOut) {
+        <span class="attempts-left">Try again in <strong>{{ lockoutSeconds }}s</strong>.</span>
+        } @else {
+        <span class="attempts-left">
+            (<strong>{{ attemptsRemaining }}</strong> {{ attemptsRemaining === 1 ? 'attempt' : 'attempts' }} remaining)
+        </span>
+        }
+    </p>
+    }
+    <p class="auth-switch">Need an account? <a routerLink="/register">Register</a></p>
+    </div>

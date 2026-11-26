@@ -1,37 +1,56 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Auth {
   private apiUrl = 'http://localhost/AngularApp3API';
-  private authState = new BehaviorSubject<boolean>(!!localStorage.getItem('token'));
-  isLoggedIn$ = this.authState.asObservable();
-  isLoggedIn = toSignal(this.isLoggedIn$, { initialValue: this.authState.value });
 
-  private http = inject(HttpClient);
+  currentUser = signal<string | null>(this.getStoredUsername());
+
+  constructor(private http: HttpClient) {}
+
+  private getStoredUsername(): string | null {
+    const rawUser = localStorage.getItem('user');
+    if (!rawUser) return null;
+
+    try {
+      const parsed = JSON.parse(rawUser);
+      return parsed?.username || parsed?.userName || (typeof parsed === 'string' ? parsed : null);
+    } catch {
+      return rawUser;
+    }
+  }
+
+  login(credentials: { username: string; password: string }) {
+    return this.http.post(`${this.apiUrl}/login.php`, credentials);
+  }
+
+  register(userData: any) {
+    return this.http.post(`${this.apiUrl}/register.php`, userData);
+  }
+
   getAuth(): boolean {
-    return this.authState.value;
+    return !!this.currentUser() || !!localStorage.getItem('token');
   }
 
-  setAuth(value: boolean) {
-    this.authState.next(value);
+  setAuth(isAuthenticated: boolean, username?: string) {
+    if (isAuthenticated) {
+      const resolvedName = username || this.getStoredUsername();
+      if (resolvedName) {
+        localStorage.setItem('username', resolvedName);
+        this.currentUser.set(resolvedName);
+      }
+    } else {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      localStorage.removeItem('username');
+      this.currentUser.set(null);
+    }
   }
 
-  login(data: { username?: string; userName?: string; password: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login.php`, data);
-  }
-
-  register(data: { username?: string; userName?: string; email: string; password: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register.php`, data);
-  }
-
-  logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    this.authState.next(false);
+  isLoggedIn(): boolean {
+    return this.getAuth();
   }
 }

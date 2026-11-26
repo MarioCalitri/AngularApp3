@@ -78,6 +78,11 @@
   font-size: 0.9rem;
 }
 
+.error-msg span {
+  color: #ffffff;
+  font-weight: 600;
+}
+
 .auth-switch {
   margin-top: 18px;
   text-align: center;
@@ -88,4 +93,18 @@
 .auth-switch a {
   color: #ff2a4b;
   text-decoration: underline;
+}
+
+.attempts-left {
+  display: inline-block;
+  margin-left: 6px;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-style: normal;
+  letter-spacing: normal;
+  color: #ffffff;
+}
+
+.attempts-left strong {
+  color: #ff4d4d;
+  font-weight: 700;
 }

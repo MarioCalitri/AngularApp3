@@ -29,3 +29,34 @@
   font-weight: 700;
   cursor: pointer;
 }
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #ffffff;
+  font-size: 0.9rem;
+}
+
+.user-status strong {
+  color: #e50914;
+}
+
+.btn-logout {
+  background: transparent;
+  border: 1px solid #e50914;
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-logout:hover {
+  background: #e50914;
+}
